@@ -193,6 +193,21 @@ kbd{font-family:var(--font-mono);background:#fff;border:2px solid #d8d2fb;border
   .momo,.momo.cheer svg,.station .jelly,.dot,.eye,.window i,.cast .walker,.gate .crew svg,.pip.walking svg{animation:none!important}
   .gate .door{transition:none}
 }
+.need{font-size:.9rem;font-weight:700;color:#3b2a86;background:#efe9ff;border-radius:10px;padding:6px 10px}
+.need::before{content:"✎ "}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px}
+.mode{background:#fff;border:3px solid #d8d2fb;border-radius:18px;padding:14px;text-align:left;display:flex;flex-direction:column;gap:4px;color:var(--panel-ink)}
+.mode:hover{border-color:#6b3fd4}
+.mode b{font-family:var(--font-display);font-size:1.25rem}
+.mode span{font-size:.88rem;color:var(--panel-muted);font-weight:600}
+.mode.ch{border-color:#ffb347}
+.clockopt{display:flex;gap:8px;align-items:center;font-weight:700;font-size:.9rem;color:var(--panel-muted)}
+.clockopt input{width:20px;height:20px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{background:#fff;border:2px solid #d8d2fb;border-radius:999px;padding:4px 12px;font-weight:800}
+.tut{display:flex;flex-direction:column;gap:10px;background:#fff;border-radius:18px;padding:14px;border:2px dashed #c8c1f5}
+.tut .prompt{border-style:solid}
+body.en-only .nl, body.en-only .instr small{display:none!important}
 </style>
 
 <div class="hud" role="banner">
@@ -222,7 +237,8 @@ kbd{font-family:var(--font-mono);background:#fff;border:2px solid #d8d2fb;border
 "use strict";
 /* ============ DATA ============ */
 const VOCAB = [{"en": "lesson", "nl": ["les"], "ex": "Your first singing lesson is on Friday 29 April."}, {"en": "topic", "nl": ["onderwerp"], "ex": "What's the topic of this book?"}, {"en": "today", "nl": ["vandaag"], "ex": "What are we going to do today?"}, {"en": "listen", "nl": ["luisteren"], "ex": "I always listen to music before I go to sleep."}, {"en": "choose", "nl": ["kiezen"], "ex": "You can choose your own festival."}, {"en": "favourite", "nl": ["favoriet"], "ex": "Metallica is my favourite rock band."}, {"en": "corner", "nl": ["hoek"], "ex": "There is a spider in the corner of the room."}, {"en": "classroom", "nl": ["klaslokaal"], "ex": "My teacher says we can have our lunch in the classroom."}, {"en": "love", "nl": ["houden van"], "ex": "My friend and I love the same music."}, {"en": "like", "nl": ["leuk vinden"], "ex": "I really like watching YouTube videos."}, {"en": "because", "nl": ["omdat"], "ex": "I can't sleep, because I'm hungry."}, {"en": "great", "nl": ["geweldig", "tof"], "ex": "Dannii Minogue is a great singer."}, {"en": "really", "nl": ["heel"], "ex": "I'm really happy."}, {"en": "lyrics", "nl": ["songtekst"], "ex": "Do you know the lyrics of all her songs?"}, {"en": "discuss", "nl": ["overleggen"], "ex": "Let's discuss what we are going to do."}, {"en": "exercise", "nl": ["oefening", "opdracht"], "ex": "Do exercise 1 with a classmate."}, {"en": "talk about", "nl": ["praten over"], "ex": "What's wrong? Do you want to talk about it?"}, {"en": "classmate", "nl": ["klasgenoot"], "ex": "Who was your favourite classmate at primary school?"}, {"en": "vote", "nl": ["stemmen"], "ex": "This is your last chance to vote for the best pop song ever."}, {"en": "next", "nl": ["volgende"], "ex": "What are you going to do next week?"}, {"en": "at home", "nl": ["thuis"], "ex": "I'm going to stay at home today."}, {"en": "at school", "nl": ["op school"], "ex": "What are you going to do at school today?"}, {"en": "watch", "nl": ["kijken"], "ex": "I never watch TV."}, {"en": "learn", "nl": ["leren"], "ex": "I want to learn how to play rugby."}, {"en": "music event", "nl": ["muziekevenement"], "ex": "Will you go to the music event with me?"}, {"en": "taste", "nl": ["smaak"], "ex": "He's got great taste in clothes."}, {"en": "artist", "nl": ["artiest"], "ex": "Who is your favourite artist?"}, {"en": "band", "nl": ["band"], "ex": "Paramore is my favourite band."}, {"en": "amazing", "nl": ["ongelofelijk"], "ex": "It was amazing to hear the song live."}, {"en": "a lot", "nl": ["veel"], "ex": "I listen to rock music a lot."}, {"en": "also", "nl": ["ook"], "ex": "I like hip hop, but I also like rock music."}, {"en": "nothing", "nl": ["niets"], "ex": "I've got nothing to say to you, Hayley!"}, {"en": "line-up", "nl": ["programma"], "ex": "The festival has a great line-up."}, {"en": "interested", "nl": ["geïnteresseerd"], "ex": "I'm really interested in hip hop dancing."}, {"en": "young", "nl": ["jong"], "ex": "Kimberley is a young and talented singer."}, {"en": "alive", "nl": ["levend"], "ex": "Is Elvis dead or alive?"}, {"en": "all the time", "nl": ["de hele tijd"], "ex": "I listen to Beyoncé all the time when I'm at home."}, {"en": "singer", "nl": ["zanger"], "ex": "I want to be a famous singer."}, {"en": "incredible", "nl": ["ongelooflijk"], "ex": "Beyoncé's voice is incredible."}, {"en": "dancer", "nl": ["danser"], "ex": "Who is the best dancer on the show?"}, {"en": "performer", "nl": ["artiest"], "ex": "Beyoncé is a good singer and a great performer."}, {"en": "too", "nl": ["ook"], "ex": "I'll help Karim first. Then I'll help you, too."}, {"en": "popular", "nl": ["populair"], "ex": "What is the most popular band at the moment?"}, {"en": "agree", "nl": ["het eens zijn"], "ex": "I agree with you. She's a great singer."}, {"en": "awesome", "nl": ["geweldig", "fantastisch"], "ex": "This is a great film with awesome special effects."}, {"en": "search", "nl": ["zoeken"], "ex": "You can find lots of funny clips if you search on YouTube."}, {"en": "living room", "nl": ["huiskamer"], "ex": "The kitchen and the living room are on the first floor of the house."}, {"en": "the charts", "nl": ["hitlijsten"], "ex": "There are two Ed Sheeran songs in the charts."}, {"en": "happy", "nl": ["blij"], "ex": "Music makes me feel happy."}, {"en": "sad", "nl": ["verdrietig"], "ex": "What makes you happy and what makes you sad?"}, {"en": "dance", "nl": ["dansen"], "ex": "I love this song. Let’s dance!"}, {"en": "sing", "nl": ["zingen"], "ex": "Can you play the guitar and sing at the same time?"}, {"en": "enter", "nl": ["binnenkomen"], "ex": "Will the new song enter the charts this week?"}, {"en": "important", "nl": ["belangrijk"], "ex": "It's important that you read the instructions first."}, {"en": "reason", "nl": ["reden"], "ex": "What is the reason?"}, {"en": "famous", "nl": ["beroemd"], "ex": "Prince was a famous American singer and songwriter."}, {"en": "question", "nl": ["vraag"], "ex": "You can ask only one question."}, {"en": "answer", "nl": ["beantwoorden"], "ex": "When are you going to answer my email?"}, {"en": "become", "nl": ["worden"], "ex": "I want to become a famous singer."}, {"en": "still", "nl": ["nog steeds"], "ex": "He's still famous after all these years."}, {"en": "the past", "nl": ["het verleden"], "ex": "Do you remember many things from the past?"}, {"en": "again", "nl": ["weer"], "ex": "I'm going to see her again tomorrow."}, {"en": "terrible", "nl": ["verschrikkelijk"], "ex": "That's a terrible song. I don't like it."}, {"en": "voice", "nl": ["stem"], "ex": "Adele has a great voice."}, {"en": "play the guitar", "nl": ["gitaarspelen"], "ex": "Sid and Ed play the guitar. Jerry plays the drums."}, {"en": "world music", "nl": ["wereldmuziek"], "ex": "World music is music from all around the world."}, {"en": "play a game", "nl": ["spel spelen"], "ex": "Can you play a Nintendo game on a smartphone?"}, {"en": "look at", "nl": ["kijken naar"], "ex": "Please look at me when I'm talking to you!"}, {"en": "task", "nl": ["taak", "opdracht"], "ex": "Finding a good restaurant is not an easy task."}, {"en": "location", "nl": ["plaats", "locatie"], "ex": "Find a good location for your festival."}, {"en": "price", "nl": ["prijs"], "ex": "What's the price of a one-day ticket?"}, {"en": "date", "nl": ["datum"], "ex": "Saturday, 6 October: save the date!"}, {"en": "time", "nl": ["tijd"], "ex": "What time are you going to pick me up?"}, {"en": "close", "nl": ["sluiten"], "ex": "Can you close the door, please?"}, {"en": "text", "nl": ["tekst"], "ex": "Write a short text of about 100 words."}, {"en": "design", "nl": ["ontwerp"], "ex": "The design of the website is great and it's easy to use."}, {"en": "colourful", "nl": ["kleurrijk"], "ex": "A peacock is a very colourful bird."}, {"en": "rules of the game", "nl": ["spelregels"], "ex": "Read the rules of the game before you start playing it."}, {"en": "part", "nl": ["deel", "stuk"], "ex": "Let's watch the first part of the video."}, {"en": "free", "nl": ["gratis"], "ex": "Order your free tickets here!"}, {"en": "write", "nl": ["schrijven"], "ex": "Write a short text of about 100 words."}, {"en": "compare", "nl": ["vergelijken"], "ex": "You can't compare the two festivals. They're completely different."}, {"en": "practise", "nl": ["oefenen"], "ex": "She will practise every night until she knows the song."}];
-const EN_VARIANTS = {"colourful":["colorful"],"favourite":["favorite"],"practise":["practice"]};
+const EN_VARIANTS = {"colourful":["colorful"],"favourite":["favorite"],"practise":["practice"],"line-up":["line up","lineup"]};
+const NL_VARIANTS = {"gitaarspelen":["gitaar spelen"]};
 const NL_EQ = {"ongelofelijk":"ongelooflijk","geinteresseerd":"geïnteresseerd"};
 
 const DAYS=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
@@ -259,6 +275,7 @@ function pick(a,r=rnd){return a[Math.floor(r()*a.length)]}
 function shuffle(a,r=rnd){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function norm(s){return String(s??"").replace(/[‘’`]/g,"'").replace(/\s+/g," ").trim().toLowerCase().replace(/[.!?]+$/,"")}
 function canonNL(s){const n=norm(s);return NL_EQ[n]||n}
+const NEED_CHOICE="Click one answer, then Check. ¦ Klik op een antwoord en dan op Check.";
 function esc(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function pad(n){return String(n).padStart(2,"0")}
 function h12(h){const x=h%12;return x===0?12:x}
@@ -278,54 +295,82 @@ function vocabSpec(e,dir,fmt,r,isFollow){
   if(dir==="nl-en"){
     const nl=e.nl[0];const valid=englishFor(nl);const validEn=valid.map(v=>v.en);
     const acc=valid.flatMap(v=>enAccepts(v.en));
-    const spec={skill:"vocab",entry:e,dir,remember:`Remember: ${nl} = ${validEn.join(" / ")}.`,model:validEn.join(" / "),after:exampleFor(e),
+    const spec={skill:"vocab",entry:e,dir,hint:`It starts with “${validEn[0][0]}”. ¦ Het begint met “${validEn[0][0]}”.`,remember:`Remember: ${nl} = ${validEn.join(" / ")}.`,model:validEn.join(" / "),after:exampleFor(e),
       follow:()=>vocabSpec(e,dir,"text",rnd,true)};
     if(fmt==="choice"){
       const d=shuffle(VOCAB.filter(v=>!validEn.includes(v.en)),r).slice(0,2).map(v=>v.en);
-      return {...spec,kind:"choice",title:now+"Choose the English label",sub:"Kies het Engelse woord",prompt:`<b>${esc(nl)}</b>`,options:shuffle([e.en,...d],r),
+      return {...spec,kind:"choice",need:NEED_CHOICE,title:now+"Choose the English label",sub:"Kies het Engelse woord",prompt:`<b>${esc(nl)}</b>`,options:shuffle([e.en,...d],r),
         check:x=>acc.includes(norm(x))?{ok:true}:{msg:x?"Not this one. Try another label.":"Choose one of the labels."}};
     }
-    return {...spec,kind:"text",title:now+"Type in English",sub:"Typ in het Engels",prompt:`<b>${esc(nl)}</b>`,
+    return {...spec,kind:"text",need:"Type the English word or words. ¦ Typ het Engelse woord of de woordgroep.",title:now+"Type in English",sub:"Typ in het Engels",prompt:`<b>${esc(nl)}</b>`,
       check:x=>{const n=norm(x);if(acc.includes(n))return{ok:true};
         if(!n)return{msg:"Type the English word."};
-        if(acc.some(a=>a.replace(/^the /,"")===n))return{msg:"Almost! Write the whole phrase. · Schrijf de hele woordgroep."};
-        if(canonNL(n)===canonNL(nl))return{msg:"Type the English word, not the Dutch one. · Typ het Engelse woord."};
-        return{msg:`Not quite. It starts with “${validEn[0][0]}”. · Het begint met “${validEn[0][0]}”.`}}};
+        if(acc.some(a=>a.replace(/^the /,"")===n))return{msg:"Almost! Write the whole phrase. ¦ Schrijf de hele woordgroep."};
+        if(canonNL(n)===canonNL(nl))return{msg:"Type the English word, not the Dutch one. ¦ Typ het Engelse woord."};
+        return{msg:`Not quite. It starts with “${validEn[0][0]}”. ¦ Het begint met “${validEn[0][0]}”.`}}};
   }
-  const accNL=e.nl.map(canonNL);
-  const spec={skill:"vocab",entry:e,dir,remember:`Remember: ${e.en} = ${e.nl.join(" / ")}.`,model:e.nl.join(" / "),after:exampleFor(e),follow:()=>vocabSpec(e,dir,"text",rnd,true)};
+  const accNL=e.nl.flatMap(w=>[w,...(NL_VARIANTS[w]||[])]).map(canonNL);
+  const spec={skill:"vocab",entry:e,dir,hint:`It starts with “${e.nl[0][0]}”. ¦ Het begint met “${e.nl[0][0]}”.`,remember:`Remember: ${e.en} = ${e.nl.join(" / ")}.`,model:e.nl.join(" / "),after:exampleFor(e),follow:()=>vocabSpec(e,dir,"text",rnd,true)};
   if(fmt==="choice"){
     const seen=new Set(accNL);const d=[];
     for(const v of shuffle(VOCAB,r)){const c=canonNL(v.nl[0]);if(!seen.has(c)){seen.add(c);d.push(v.nl[0])}if(d.length===2)break}
-    return {...spec,kind:"choice",title:(isFollow?"Nu jij: ":"")+"Kies de Nederlandse betekenis",sub:"Choose the Dutch meaning",prompt:`<b>${esc(e.en)}</b>`,options:shuffle([e.nl[0],...d],r),
+    return {...spec,kind:"choice",need:NEED_CHOICE,title:(isFollow?"Nu jij: ":"")+"Kies de Nederlandse betekenis",sub:"Choose the Dutch meaning",prompt:`<b>${esc(e.en)}</b>`,options:shuffle([e.nl[0],...d],r),
       check:x=>accNL.includes(canonNL(x))?{ok:true}:{msg:x?"Niet deze. Probeer een ander woord.":"Kies een van de woorden."}};
   }
-  return {...spec,kind:"text",title:(isFollow?"Nu jij: ":"")+"Typ in het Nederlands",sub:"Type in Dutch",prompt:`<b>${esc(e.en)}</b>`,
+  return {...spec,kind:"text",need:"Type the Dutch word. ¦ Typ het Nederlandse woord.",title:(isFollow?"Nu jij: ":"")+"Typ in het Nederlands",sub:"Type in Dutch",prompt:`<b>${esc(e.en)}</b>`,
     check:x=>{const n=canonNL(x);if(accNL.includes(n))return{ok:true};
       if(!norm(x))return{msg:"Typ het Nederlandse woord."};
       if(norm(x)===norm(e.en))return{msg:"Typ het Nederlandse woord, niet het Engelse."};
       return{msg:`Bijna. Het begint met “${e.nl[0][0]}”.`}}};
 }
 
+// Challenge gap-fill: dedicated sentences where the textbook example doesn't work, and per-sentence answers that are also correct English.
+const GAP_SENT={"play a game":"Let's play a game of chess.","reason":"I can't come. The reason is that I'm ill."};
+const GAP_ALT={"lesson":["class"],"topic":["title"],"today":["tonight","tomorrow"],"choose":["create","pick","plan","design"],"corner":["middle"],"classroom":["canteen"],
+ "love":["like","enjoy"],"like":["love","enjoy"],"because":["as","since"],"great":["famous","popular","young","terrible","good"],"really":["very","so"],
+ "lyrics":["words","titles"],"discuss":["decide","plan","talk about"],"exercise":["task","part"],"talk about":["discuss"],"classmate":["teacher","friend"],
+ "next":["this"],"at home":["at school"],"at school":["at home"],"watch":["like"],"learn":["know"],"music event":["festival","concert","party","show"],
+ "artist":["band","singer","dancer","performer"],"band":["artist"],"amazing":["awesome","incredible","great","terrible"],"a lot":["all the time"],
+ "young":["famous","popular","great"],"all the time":["a lot"],"singer":["dancer","artist","performer","band"],"incredible":["amazing","awesome","great","terrible"],
+ "dancer":["singer","artist","performer"],"performer":["dancer","artist"],"popular":["famous"],"awesome":["amazing","incredible","great","terrible"],
+ "search":["look"],"happy":["sad"],"dance":["sing"],"sing":["dance"],"famous":["popular","great","young"],"answer":["read"],"become":["be"],"still":["really"],
+ "terrible":["sad"],"play the guitar":["sing","dance"],"look at":["watch","listen to"],"task":["job"],"location":["place"],"close":["open"],"text":["story"],
+ "colourful":["beautiful"],"practise":["sing","dance"]};
+function gapSentence(e){const ex=GAP_SENT[e.en]||e.ex;const esc2=e.en.replace(/[.*+?^${}()|[\]\\-]/g,"\\$&");const m=ex.match(new RegExp("(^|[^A-Za-z])("+esc2+")(?![A-Za-z])","i"));if(!m)return null;const i=m.index+m[1].length;return{before:ex.slice(0,i),after:ex.slice(i+m[2].length),word:m[2],full:ex}}
+function gapClue(w){return w.split(" ").map(x=>x[0]+" _".repeat(x.length-1)).join("   ")}
+const GAP_OK=VOCAB.filter(v=>gapSentence(v));
+function gapSpec(e,r,isFollow){
+  const g=gapSentence(e);const acc=enAccepts(e.en);const alt=(GAP_ALT[e.en]||[]).flatMap(enAccepts);const nw=e.en.split(" ").length;
+  return {skill:"vocab",entry:e,dir:"gap",kind:"text",title:(isFollow?"Now you: ":"")+"Complete the sentence",sub:"",
+    prompt:`${esc(g.before)}<b>___</b>${esc(g.after)} <span class="rule">(${esc(gapClue(g.word))})</span>`,
+    need:nw===1?"Type the missing word.":`Type the ${nw} missing words.`,
+    remember:`Remember: ${g.full}`,model:e.en,after:g.full,hint:`It starts with “${e.en[0]}”.`,
+    check:x=>{const n=norm(x);if(acc.includes(n))return{ok:true};
+      if(alt.includes(n))return{ok:true,note:`That works too! The word on the clue was: ${e.en}.`};
+      if(!n)return{msg:"Type the missing word."};
+      if(n.split(" ").length!==nw)return{msg:nw===1?"Use one word.":`Use ${nw} words.`};
+      return{msg:`Not quite. It starts with “${e.en[0]}”. Read the whole sentence again.`}},
+    follow:()=>gapSpec(pick(GAP_OK.filter(v=>v.en!==e.en)),rnd,true)};
+}
 function verbSpec(kind,r){
   const [v,obj]=pick(VERBS,r);const adv=pick(ADV,r);
   const subj=kind==="base"?pick(BASE_SUBJ,r):pick(S_SUBJ,r);
   const ans=kind==="base"?v:v+"s";
   const before=`${subj} ${adv?adv+" ":""}`;
-  return {kind:"text",skill:"present",title:"Fix the crew instruction",sub:"Vul het werkwoord in",
+  return {kind:"text",skill:"present",title:"Fix the crew instruction",sub:"Vul het werkwoord in",need:"Type only the verb. ¦ Typ alleen het werkwoord.",hint:kind==="base"?`${subj}: no -s. ¦ Bij ${lowerSubj(subj)}: geen -s.`:`${subj==="He"||subj==="She"?subj:subj+" = he/she"}: add -s. ¦ Zet er -s achter.`,
     prompt:`${esc(before)}<b>___</b> ${esc(obj)}. <span class="rule">(${esc(v)})</span>`,
     rule:"He / she / it: add -s. I / you / we / they: no -s.",
     gap:ans,model:`${before}${ans} ${obj}.`,remember:`Remember: ${lowerSubj(subj)} ${ans}.`,after:`${before}${ans} ${obj}.`,actor:subj,
     check:x=>{const n=norm(x);if(n===ans)return{ok:true};
       if(!n)return{msg:"Type the verb."};
-      if(kind==="base"&&n===v+"s")return{msg:"With I, you, we and they: no -s. · Bij I, you, we, they: geen -s."};
-      if(kind==="s"&&n===v)return{msg:`${subj==="He"||subj==="She"?subj:subj+" = he/she"}: add -s. · Zet er -s achter.`};
+      if(kind==="base"&&n===v+"s")return{msg:"With I, you, we and they: no -s. ¦ Bij I, you, we, they: geen -s."};
+      if(kind==="s"&&n===v)return{msg:`${subj==="He"||subj==="She"?subj:subj+" = he/she"}: add -s. ¦ Zet er -s achter.`};
       return{msg:`Use the verb “${v}”.`}},
     follow:()=>verbSpec(kind,rnd)};
 }
 function beSpec(form,r){
   const subj=pick(BE_SUBJ[form],r);const rest=pick(BE_REST,r);
-  return {kind:"text",skill:"be",title:"Fix the crew instruction",sub:"Vul am, is of are in",
+  return {kind:"text",skill:"be",title:"Fix the crew instruction",sub:"Vul am, is of are in",need:"Type only am, is or are. ¦ Typ alleen am, is of are.",hint:`Look at the first word: ${subj}. ¦ Kijk naar het eerste woord: ${subj}.`,
     prompt:`${esc(subj)} <b>___</b> ${esc(rest)}.`,rule:"I am · he / she / it is · you / we / they are",
     gap:form,model:`${subj} ${form} ${rest}.`,remember:`Remember: ${lowerSubj(subj)} ${form}.`,after:`${subj} ${form} ${rest}.`,actor:subj,
     check:x=>{const n=norm(x);if(n===form)return{ok:true};
@@ -335,27 +380,27 @@ function beSpec(form,r){
 }
 function supSpec(s){
   const accs=[s.ans,...(s.alt||[])];
-  return {kind:"text",skill:"sup",title:"Repair the announcer strip",sub:"Maak de overtreffende trap",
+  return {kind:"text",skill:"sup",title:"Repair the announcer strip",sub:"Maak de overtreffende trap",need:"Write the whole superlative, starting with “the”. ¦ Schrijf de hele overtreffende trap, met “the”.",hint:s.long?"Long word: the most + word. ¦ Lang woord: the most + woord.":"Short word: the + word + -est. ¦ Kort woord: the + woord + -est.",
     prompt:`${esc(s.t).replace("___","<b>___</b>")} <span class="rule">(${s.adj})</span>`,
     rule:"Short word: the + -est. Long word: the most + word.",
     gap:s.ans,model:s.t.replace("___",s.ans),remember:`Remember: ${s.ans}.`,after:s.t.replace("___",s.ans),
     check:x=>{const n=norm(x);if(accs.includes(n))return{ok:true};
       if(!n)return{msg:"Type the whole answer, with “the”."};
-      if(accs.some(a=>a.replace(/^the /,"")===n))return{msg:"Don't forget “the”. · Vergeet “the” niet."};
-      if(!s.long&&/most/.test(n))return{msg:"Short word: the + -est. · Kort woord: the + -est."};
-      if(s.long&&/est$/.test(n))return{msg:"Long word: the most + the word. · Lang woord: the most + woord."};
+      if(accs.some(a=>a.replace(/^the /,"")===n))return{msg:"Don't forget “the”. ¦ Vergeet “the” niet."};
+      if(!s.long&&/most/.test(n))return{msg:"Short word: the + -est. ¦ Kort woord: the + -est."};
+      if(s.long&&/est$/.test(n))return{msg:"Long word: the most + the word. ¦ Lang woord: the most + woord."};
       return{msg:"Short word: the + -est. Long word: the most + word."}},
     follow:()=>supSpec(pick(SUPS.filter(o=>o.long===s.long&&o.adj!==s.adj)))};
 }
 function plSpec(noun,r){
   const num=pick(NUMW,r);const ans=noun+"s";
-  return {kind:"text",skill:"plural",title:"Label the sound crate",sub:"Schrijf het meervoud",
+  return {kind:"text",skill:"plural",title:"Label the sound crate",sub:"Schrijf het meervoud",need:"Type one word. ¦ Typ één woord.",hint:`Add -s to “${noun}”. ¦ Zet -s achter “${noun}”.`,
     prompt:`One ${noun}. ${num} <b>___</b>.`,rule:"More than one: add -s, attached to the word.",
     gap:ans,model:`One ${noun}. ${num} ${ans}.`,remember:`Remember: one ${noun}, two ${ans}.`,after:`One ${noun}. ${num} ${ans}.`,
     check:x=>{const n=norm(x);if(n===ans)return{ok:true};
       if(!n)return{msg:"Type the word with -s."};
-      if(n.replace(/\s+/g,"")===ans)return{msg:`Attach the s: ${ans}. · Schrijf de s aan het woord vast.`};
-      if(n===noun)return{msg:"More than one: add -s. · Meer dan één: zet er -s achter."};
+      if(n.replace(/\s+/g,"")===ans)return{msg:`Attach the s: ${ans}. ¦ Schrijf de s aan het woord vast.`};
+      if(n===noun)return{msg:"More than one: add -s. ¦ Meer dan één: zet er -s achter."};
       return{msg:`Use “${noun}” + s.`}},
     follow:()=>plSpec(pick(NOUNS.filter(o=>o!==noun)),rnd)};
 }
@@ -366,9 +411,9 @@ function dateChecker(dt){
     if(s===ans)return{ok:true};
     if(!s)return{msg:"Write the day, the number and the month."};
     const low=s.toLowerCase();
-    if(low===ans.toLowerCase())return{msg:"Days and months start with a capital letter. · Dagen en maanden met een hoofdletter."};
-    if(DAGEN.some(g=>low.includes(g))||MAANDEN.some(g=>new RegExp("\\b"+g+"\\b").test(low)&&!MONTHS.map(x=>x.toLowerCase()).includes(g)))return{msg:"Use the English day and month. · Gebruik de Engelse dag en maand."};
-    if(low.replace(",","")===ans.toLowerCase().replace(",",""))return{msg:"Put a comma after the day. · Zet een komma na de dag."};
+    if(low===ans.toLowerCase())return{msg:"Days and months start with a capital letter. ¦ Dagen en maanden met een hoofdletter."};
+    if(DAGEN.some(g=>low.includes(g))||MAANDEN.some(g=>new RegExp("\\b"+g+"\\b").test(low)&&!MONTHS.map(x=>x.toLowerCase()).includes(g)))return{msg:"Use the English day and month. ¦ Gebruik de Engelse dag en maand."};
+    if(low.replace(",","")===ans.toLowerCase().replace(",",""))return{msg:"Put a comma after the day. ¦ Zet een komma na de dag."};
     const m=s.match(/^([A-Za-z]+),?\s+(\d{1,2})\s+([A-Za-z]+)$/);
     if(!m){if(/^[A-Za-z]+,?\s+[A-Za-z]+\s+\d/.test(s))return{msg:"Order: day, number month."};return{msg:"Write it like this: day, number month."}}
     if(m[1].toLowerCase()!==DAYS[dt.w].toLowerCase())return{msg:MONTHS.some(x=>x.toLowerCase()===m[1].toLowerCase())?"Order: day, number month.":"Check the spelling of the day."};
@@ -378,21 +423,23 @@ function dateChecker(dt){
 }
 function calSpec(type,r){
   const dt=makeDate(r);
-  const base={kind:"text",skill:"date",model:dt.full,remember:`Remember: ${dt.full}.`,rule:"Day, number month. Capital letters for days and months.",check:dateChecker(dt),follow:()=>calSpec(type,rnd),caps:true};
+  const base={kind:"text",skill:"date",need:"Type: day, number month. Example: Friday, 29 April. ¦ Typ: dag, nummer maand.",hint:type==="caps"?"Days and months start with a capital letter. ¦ Dagen en maanden met een hoofdletter.":`Start with the day: ${DAYS[dt.w]}. ¦ Begin met de dag: ${DAYS[dt.w]}.`,model:dt.full,remember:`Remember: ${dt.full}.`,rule:"Day, number month. Capital letters for days and months.",check:dateChecker(dt),follow:()=>calSpec(type,rnd),caps:true};
   if(type==="caps")return{...base,title:"Fix the capitals",sub:"Verbeter de hoofdletters",prompt:`<b>${DAYS[dt.w].toLowerCase()}, ${dt.d} ${MONTHS[dt.m].toLowerCase()}</b>`};
+  if(type==="num")return{...base,hint:"",title:"Write the date in words",sub:"",prompt:`<b>${DAYS[dt.w]} ${dt.d}/${dt.m+1}</b> <span class="rule">(day/month)</span>`};
+  if(type==="order")return{...base,hint:"",title:"Put the date in the right order",sub:"",prompt:`<b>${MONTHS[dt.m]} ${dt.d}, ${DAYS[dt.w]}</b>`};
   return{...base,title:"Write in English",sub:"Schrijf in het Engels",prompt:`<b>${DAGEN[dt.w]} ${dt.d} ${MAANDEN[dt.m]}</b>`};
 }
 function clockSpec(h){
   const want=h12(h),wantAp=ap(h);
-  return {kind:"clock",skill:"time",title:"Turn the ship clock into festival time",sub:"Zet de tijd om naar a.m. / p.m.",
+  return {kind:"clock",skill:"time",title:"Turn the ship clock into festival time",sub:"Zet de tijd om naar a.m. / p.m.",need:"Type a number from 1 to 12 and choose a.m. or p.m. ¦ Typ een getal van 1 tot 12 en kies a.m. of p.m.",hint:h>12?`Take away 12: ${h} − 12. Then choose p.m. ¦ Haal er 12 af en kies p.m.`:"Before 12 noon: a.m. ¦ Voor 12 uur: a.m.",
     prompt:`<span style="font-family:var(--font-mono);font-size:1.6rem">${pad(h)}:00</span>`,rule:"a.m. = before 12 noon · p.m. = after 12 noon",
     model:`${want} ${wantAp}`,remember:`Remember: ${pad(h)}:00 = ${want} ${wantAp}`,after:`${pad(h)}:00 = ${want} ${wantAp}`,
     check:x=>{const raw=String((x&&x.num)||"").trim();const a=x&&x.ap;
-      if(!raw)return{msg:"Type the hour. · Typ het uur."};
-      if(!/^\d{1,2}$/.test(raw))return{msg:"Type only a number, like 4. · Typ alleen een getal."};
+      if(!raw)return{msg:"Type the hour. ¦ Typ het uur."};
+      if(!/^\d{1,2}$/.test(raw))return{msg:"Type only a number, like 4. ¦ Typ alleen een getal."};
       const n=parseInt(raw,10);
-      if(n<1||n>12)return n===h&&h>12?{msg:"Use the 12-hour clock: take away 12. · Haal er 12 af."}:{msg:"Use a number from 1 to 12. · Gebruik 1 tot en met 12."};
-      if(!a)return{msg:"Choose a.m. or p.m. · Kies a.m. of p.m."};
+      if(n<1||n>12)return n===h&&h>12?{msg:"Use the 12-hour clock: take away 12. ¦ Haal er 12 af."}:{msg:"Use a number from 1 to 12. ¦ Gebruik 1 tot en met 12."};
+      if(!a)return{msg:"Choose a.m. or p.m. ¦ Kies a.m. of p.m."};
       if(n===want&&a===wantAp)return{ok:true};
       if(n===h&&h>12)return{msg:"Use the 12-hour clock: take away 12."};
       if(n===want)return{msg:"a.m. = before 12 noon · p.m. = after 12 noon."};
@@ -402,21 +449,21 @@ function clockSpec(h){
 function priceCheck(raw,p){
   const model=fmtPrice(p);const s=String(raw??"").trim();
   if(!s)return{msg:"Write the price."};
-  if(/\s/.test(s))return{msg:"No spaces: write it all together. · Geen spaties."};
-  if(!s.startsWith("£"))return{msg:s.endsWith("£")?"Put £ first. · Zet £ vooraan.":"Start with £. · Begin met £."};
+  if(/\s/.test(s))return{msg:"No spaces: write it all together. ¦ Geen spaties."};
+  if(!s.startsWith("£"))return{msg:s.endsWith("£")?"Put £ first. ¦ Zet £ vooraan.":"Start with £. ¦ Begin met £."};
   const body=s.slice(1);
-  if(body.includes(","))return{msg:`Use a dot: ${model}. · Gebruik een punt.`};
+  if(body.includes(","))return{msg:`Use a dot: ${model}. ¦ Gebruik een punt.`};
   if(!/^\d+(\.\d+)?$/.test(body))return{msg:"Write the number after £."};
   const v=Math.round(parseFloat(body)*100);
   if(v!==p)return{msg:"Check the amount."};
   if(s===model)return{ok:true};
-  if(p%100===0)return{msg:`That is the same amount. For this ticket, write ${model}. · Hele ponden: geen .00.`};
+  if(p%100===0)return{msg:`That is the same amount. For this ticket, write ${model}. ¦ Hele ponden: geen .00.`};
   if(/^\d+\.\d$/.test(body))return{msg:"Write two numbers after the dot."};
   return{msg:`Write it like this: ${model}.`};
 }
 function priceSpec(pr){
   const [p,words]=pr;
-  return {kind:"text",skill:"price",pound:true,title:"Print the ticket price",sub:"Schrijf de prijs",prompt:`<b>${words}.</b>`,
+  return {kind:"text",skill:"price",pound:true,title:"Print the ticket price",sub:"Schrijf de prijs",need:"Type £ and the amount, no spaces. ¦ Typ £ en het bedrag, zonder spaties.",hint:p%100?"Pounds and pence: use a dot, like £3.50. ¦ Ponden en pence: gebruik een punt.":"Whole pounds: only £ and the number, like £8. ¦ Hele ponden: alleen £ en het getal.",prompt:`<b>${words}.</b>`,
     rule:"Use £. No spaces. Whole pounds: no .00.",model:fmtPrice(p),remember:`Remember: ${fmtPrice(p)}`,after:`${words} = ${fmtPrice(p)}`,
     check:x=>priceCheck(x,p),follow:()=>priceSpec(pick(PRICES.filter(q=>(q[0]%100===0)===(p%100===0)&&q[0]!==p)))};
 }
@@ -433,27 +480,33 @@ const STATIONS=[
 const CONSOLE={id:"broadcast",name:"Broadcast",x:50,y:50};
 
 const seenVocab=new Set();
-function makeMission(seed){
-  const r=mulberry(seed);
-  let pool=shuffle(VOCAB,r);pool=[...pool.filter(v=>!seenVocab.has(v.en)),...pool.filter(v=>seenVocab.has(v.en))];
-  const words=pool.slice(0,4);
-  const vocab=shuffle([["nl-en","choice"],["nl-en","text"],["en-nl","choice"],["en-nl","text"]],r).map((d,i)=>vocabSpec(words[i],d[0],d[1],r));
-  const beForms=shuffle(["am","is","are"],r).slice(0,2);
-  const crew=shuffle([verbSpec("base",r),verbSpec("s",r),beSpec(beForms[0],r),beSpec(beForms[1],r)],r);
-  const shorts=SUPS.filter(s=>!s.long),longs=SUPS.filter(s=>s.long);
+function makeMission(seed,level){
+  level=level||"standard";const r=mulberry(seed);const G=level==="guided",C=level==="challenge";
+  let pool=shuffle(C?GAP_OK:VOCAB,r);pool=[...pool.filter(v=>!seenVocab.has(v.en)),...pool.filter(v=>seenVocab.has(v.en))];
+  const VF=G?[["nl-en","choice"],["en-nl","choice"],["nl-en","text"]]
+          :[["nl-en","choice"],["nl-en","text"],["en-nl","choice"],["en-nl","text"]];
+  const vocab=C?pool.slice(0,6).map(w=>gapSpec(w,r)):shuffle(VF,r).map((d,i)=>vocabSpec(pool[i],d[0],d[1],r));
+  const be3=shuffle(["am","is","are"],r);
+  const crew=shuffle(G?[verbSpec("base",r),verbSpec("s",r),beSpec(be3[0],r)]
+    :C?[verbSpec("base",r),verbSpec("s",r),verbSpec("s",r),beSpec(be3[0],r),beSpec(be3[1],r),beSpec(be3[2],r)]
+    :[verbSpec("base",r),verbSpec("s",r),beSpec(be3[0],r),beSpec(be3[1],r)],r);
+  const shorts=SUPS.filter(s=>!s.long),longs=shuffle(SUPS.filter(s=>s.long),r);
   const nouns=shuffle(NOUNS,r);
-  const sound=[supSpec(pick(shorts,r)),supSpec(pick(longs,r)),plSpec(nouns[0],r),plSpec(nouns[1],r)];
-  const cal=[calSpec("caps",r),calSpec("nl",r)];
-  const clock=shuffle([clockSpec(pick([1,2,3,4,5,6,7,8,9,10,11],r)),clockSpec(pick([13,14,15,16,17,18,19,20,21,22,23],r))],r);
-  const whole=PRICES.filter(p=>p[0]%100===0),pen=PRICES.filter(p=>p[0]%100!==0);
-  const tickets=[priceSpec(pick(whole,r)),priceSpec(pick(pen,r))];
+  const sound=G?[supSpec(pick(shorts,r)),supSpec(longs[0]),plSpec(nouns[0],r)]
+    :C?[supSpec(pick(shorts,r)),supSpec(longs[0]),supSpec(longs[1]),plSpec(nouns[0],r),plSpec(nouns[1],r)]
+    :[supSpec(pick(shorts,r)),supSpec(longs[0]),plSpec(nouns[0],r),plSpec(nouns[1],r)];
+  const cal=C?[calSpec("caps",r),calSpec("num",r),calSpec("order",r)]:[calSpec("caps",r),calSpec("nl",r)];
+  const amH=shuffle([1,2,3,4,5,6,7,8,9,10,11],r),pmH=shuffle([13,14,15,16,17,18,19,20,21,22,23],r);
+  const clock=shuffle(C?[clockSpec(amH[0]),clockSpec(pmH[0]),clockSpec(pmH[1])]:[clockSpec(amH[0]),clockSpec(pmH[0])],r);
+  const whole=shuffle(PRICES.filter(p=>p[0]%100===0),r),pen=shuffle(PRICES.filter(p=>p[0]%100!==0),r);
+  const tickets=C?[priceSpec(whole[0]),priceSpec(pen[0]),priceSpec(pen[1])]:[priceSpec(whole[0]),priceSpec(pen[0])];
   const t=pick(TIMES,r);const bands=shuffle(BANDS,r).slice(0,2);
   const card={name:pick(FEST,r),place:pick(PLACES,r),date:makeDate(r),start:t[0],end:t[1],next:t[1]<t[0],price:pick(PRICES,r)[0],artists:bands};
-  return {seed,items:{cargo:vocab,crew,sound,calendar:cal,clock,tickets},card};
+  return {seed,level,items:{cargo:vocab,crew,sound,calendar:cal,clock,tickets},card};
 }
 
 /* ============ STATE ============ */
-const S={phase:"start",mode:"mission",mission:null,st:{},active:0,overtime:false,timedOut:false,warned:false,
+const S={level:"standard",enOnly:false,tutDone:false,phase:"start",mode:"mission",mission:null,st:{},active:0,overtime:false,timedOut:false,warned:false,
   pip:{x:50,y:86,tx:null,ty:null,target:null,dir:1},keys:new Set(),open:null,help:false,confirm:false,hinted:[],flyer:{},flyerChecked:false,best:{}};
 
 function newRun(mission,mode){
@@ -620,7 +673,7 @@ function updateClock(){_updateClock();const pg=$("pgate");if(pg)pg.textContent=$
 function _updateClock(){
   const chip=$("gateChip"),t=$("gateText");chip.classList.remove("amber","orbit");
   if(S.phase==="start"){t.textContent=`Gate ${mmss(MISSION_SECONDS)}`;return}
-  if(S.mode==="practice"){t.textContent=`Practice · ${mmss(S.active)}`;return}
+  if(S.mode==="practice"){t.textContent=`${S.level==="guided"?"Guided":S.level==="challenge"?"Challenge":"No clock"} · ${mmss(S.active)}`;return}
   if(S.overtime){chip.classList.add("orbit");t.textContent=`Safe orbit · ${mmss(S.active)}`;return}
   const left=MISSION_SECONDS-S.active;if(left<=60)chip.classList.add("amber");t.textContent=`Gate ${mmss(left)}`;
 }
@@ -647,7 +700,9 @@ function itemHTML(it,pre){
   if(sp.kind==="choice")ctl=`<div class="opts" role="group" aria-label="Answers">${sp.options.map((o,k)=>`<button type="button" class="opt" data-o="${esc(o)}" aria-pressed="${it.sel===o}" id="${p}-o${k}">${esc(o)}</button>`).join("")}</div>`;
   else if(sp.kind==="clock")ctl=`<div class="field"><label class="sr" for="${p}-in">Hour</label><input id="${p}-in" inputmode="numeric" autocomplete="off" placeholder="hour" value="${esc(it.resp?.num||"")}" maxlength="2" style="flex:0 1 120px"><div class="ap" role="group" aria-label="a.m. or p.m.">${["a.m.","p.m."].map(a=>`<button type="button" data-ap="${a}" aria-pressed="${it.resp?.ap===a}">${a}</button>`).join("")}</div></div>`;
   else ctl=`<div class="field"><label class="sr" for="${p}-in">Your answer</label><input id="${p}-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" value="${esc(it.resp||"")}">${sp.pound?`<button type="button" class="keybtn" data-pound aria-label="Type the pound sign">£</button>`:""}</div>`;
-  return `<div class="instr">${esc(sp.title)}<small>${esc(sp.sub)}</small></div><div class="prompt">${sp.prompt}</div>${sp.rule?`<div class="rule">${esc(sp.rule)}</div>`:""}${ctl}`;
+  const showRule=sp.rule&&(S.level==="guided"?!sp.hint:S.level!=="challenge"||(it.tries||0)>0);
+  const tip=S.level==="guided"&&sp.hint?`<div class="fb model"><span><b>Tip:</b> ${esc(sp.hint)}</span></div>`:"";
+  return `<div class="instr">${esc(sp.title)}<small>${esc(sp.sub)}</small></div><div class="prompt">${sp.prompt}</div>${showRule?`<div class="rule">${esc(sp.rule)}</div>`:""}${sp.need?`<div class="need">${esc(sp.need)}</div>`:""}${tip}${ctl}`;
 }
 function bindItem(it,pre,onCheck){
   const p=pre||"i";const root=$("pbody");
@@ -668,17 +723,17 @@ function renderPanel(msg){
   const it=current(id);
   const prog=n===t?"Ready":`${n}/${t} fixed`;
   if(!it){
-    panelShell(s.name,prog,`<div class="fixed-banner">System ready!</div><p>${esc(s.name)} works again. ${readyCount()===6?"All six systems are ready: go to the Broadcast console in the middle.":"Walk Pip to another station."}</p><p class="rule">${readyCount()===6?"Alles werkt! Loop naar de Broadcast-console in het midden.":"Systeem gerepareerd. Loop naar een ander station."}</p><div class="actions"><button class="big" id="pdone" type="button">Back to the ship</button></div>`);
+    panelShell(s.name,prog,`<div class="fixed-banner">System ready!</div><p>${esc(s.name)} works again. ${readyCount()===6?"All six systems are ready: go to the Broadcast console in the middle.":"Walk Pip to another station."}</p><p class="rule nl">${readyCount()===6?"Alles werkt! Loop naar de Broadcast-console in het midden.":"Systeem gerepareerd. Loop naar een ander station."}</p><div class="actions"><button class="big" id="pdone" type="button">Back to the ship</button></div>`);
     $("pdone").onclick=closePanel;$("pdone").focus();return;
   }
   const shown=(it.follow||it).spec;if(shown.skill==="vocab"&&shown.entry)seenVocab.add(shown.entry.en);
   let body="";
   if(it.follow){
-    body+=`<div class="fb model"><span>Look / Kijk: ${it.spec.gap?`<b>${esc(it.spec.gap)}</b> → `:""}<b>${esc(it.spec.model)}</b></span></div>`;
+    body+=`<div class="fb model"><span>${S.enOnly?"Look:":"Look / Kijk:"} ${it.spec.gap?`<b>${esc(it.spec.gap)}</b> → `:""}<b>${esc(it.spec.model)}</b></span></div>`;
     body+=itemHTML(it.follow,"f");
   }else body+=itemHTML(it,"i");
   const cur=it.follow||it;
-  body+=`<div id="fbx">${msg||""}</div><div class="actions" id="acts"><button class="big" id="pcheck" type="button">Check</button>${!it.follow&&it.tries>=2?`<button class="big alt" id="pshow" type="button">Show me · Laat zien</button>`:""}</div>`;
+  body+=`<div id="fbx">${msg||""}</div><div class="actions" id="acts"><button class="big" id="pcheck" type="button">Check</button>${!it.follow&&it.tries>=showMeAfter()?`<button class="big alt" id="pshow" type="button">Show me ¦ Laat zien</button>`:""}</div>`;
   panelShell(s.name,prog,body);
   const doCheck=()=>checkItem(id,it);
   bindItem(cur,it.follow?"f":"i",doCheck);
@@ -686,35 +741,37 @@ function renderPanel(msg){
   const sh=$("pshow");if(sh)sh.onclick=()=>{it.follow={spec:it.spec.follow(),resp:"",tries:0,sel:null};it.showed=true;noteHint(it.spec);renderPanel()};
   const f=document.querySelector("#pbody input, #pbody .opt");if(f)f.focus({preventScroll:true});
 }
+function showMeAfter(){return S.level==="guided"?1:S.level==="challenge"?3:2}
 function noteHint(sp){if(sp.remember&&!S.hinted.includes(sp.remember))S.hinted.push(sp.remember)}
 function checkItem(id,it){
   if(S.open!==id||paused()||it.fixed)return;
   const cur=it.follow||it;const res=cur.spec.check(respOf(cur));
   if(res.ok){
-    it.fixed=true;if(it.tries>0||it.follow)noteHint(it.spec);
+    const helped=it.tries>0||!!it.follow;it.fixed=true;it.helped=helped;it.done=cur.spec;if(helped)noteHint(it.spec);
     if(it.showed&&it.spec.skill==="vocab"&&!it.spec.recall&&it.spec.entry){
-      const rs=vocabSpec(it.spec.entry,it.spec.dir,"text",rnd,false);rs.recall=true;rs.title="Remember this one? · "+rs.title;
+      const rs=it.spec.dir==="gap"?gapSpec(it.spec.entry,rnd,false):vocabSpec(it.spec.entry,it.spec.dir,"text",rnd,false);rs.recall=true;rs.title="Remember this one? · "+rs.title;
       const items=S.st[id].items;const idx=items.indexOf(it);let pos=idx+1;let skipped=0;
       while(pos<items.length&&skipped<1){if(!items[pos].fixed)skipped++;pos++}
       items.splice(pos,0,{spec:rs,resp:"",tries:0,fixed:false,sel:null,follow:null,showed:false});
     }
     cheer();updateStations();
-    const after=cur.spec.after?`<span class="ex">${esc(cur.spec.after)}</span>`:"";
+    const after=(res.note?`<span class="ex" style="font-style:normal">${esc(res.note)}</span>`:"")+(cur.spec.after?`<span class="ex">${esc(cur.spec.after)}</span>`:"");
     const rest=current(id);
     announce("Fixed!");
-    $("fbx").innerHTML=`<div class="fb ok"><span><b>Fixed!</b>${after}</span></div>`;
+    const praise=it.follow?"You did it yourself after the example. ¦ Na het voorbeeld deed je het zelf.":it.tries>0?"You used the hint and fixed it. ¦ Met de tip heb je het verbeterd.":"";
+    $("fbx").innerHTML=`<div class="fb ok"><span><b>Fixed!</b>${after}${praise?`<span class="ex" style="font-style:normal">${esc(praise)}</span>`:""}</span></div>`;
     $("acts").innerHTML=`<button class="big go" id="pnext" type="button">${rest?"Next":"Finish repair"}</button>`;
     document.querySelectorAll("#pbody input, #pbody .opt, #pbody [data-ap], #pbody [data-pound]").forEach(x=>x.disabled=true);
     $("pnext").onclick=()=>renderPanel();$("pnext").focus();
     return;
   }
   cur.tries++;if(!it.follow)it.tries=cur.tries;
-  if(it.follow&&cur.tries>=2)res.msg+=` · The answer is: ${cur.spec.gap?cur.spec.gap+" → ":""}${cur.spec.model}`;
+  if(it.follow&&cur.tries>=2){const pr=res.msg.split(" ¦ ");res.msg=`${pr[0]} The answer is: ${cur.spec.gap?cur.spec.gap+" → ":""}${cur.spec.model}`+(pr[1]?" ¦ "+pr[1]:"")}
   renderPanel(`<div class="fb hint" role="status"><span>${esc(res.msg)}</span></div>`);
 }
 
 /* ============ CONSOLE & FLYER ============ */
-function cardLine(c){return [c.name.toUpperCase(),c.place,c.date.full,`${h12(c.start)} ${ap(c.start)} – ${h12(c.end)} ${ap(c.end)}${c.next?" (next day / volgende dag)":""}`,fmtPrice(c.price),c.artists.join(" and ")]}
+function cardLine(c){return [c.name.toUpperCase(),c.place,c.date.full,`${h12(c.start)} ${ap(c.start)} – ${h12(c.end)} ${ap(c.end)}${c.next?(S.enOnly?" (next day)":" (next day / volgende dag)"):""}`,fmtPrice(c.price),c.artists.join(" and ")]}
 function renderConsole(){
   const rc=readyCount();
   if(rc<6){
@@ -726,11 +783,11 @@ function renderConsole(){
   const c=S.mission.card;const L=cardLine(c);
   const F=[["name","Festival name","Naam"],["place","Place","Plaats"],["date","Date","Datum"],["time","Start and end time","Begin- en eindtijd"],["price","Ticket price","Prijs"],["artists","Artist(s)","Artiesten"],["why","Why come?","Waarom komen?"]];
   const ph={time:"It starts at … and it ends at …",price:"Tickets are …",why:""};
-  const how={time:"Write a sentence · Schrijf een zin: It starts at 4 p.m. and it ends at 10 p.m.",price:"Write a sentence · Schrijf een zin: Tickets are £8.",artists:"List the artists · Noem de artiesten",why:"One sentence: why should people come? · Eén zin: waarom komen?"};
+  const how={time:"Write a sentence, for example: It starts at 4 p.m. and it ends at 10 p.m. ¦ Schrijf een zin.",price:"Write a sentence, for example: Tickets are £8. Use the £ button. ¦ Schrijf een zin.",artists:"List the artists ¦ Noem de artiesten",why:"One sentence: why should people come? ¦ Eén zin: waarom komen?"};
   panelShell("Write the festival broadcast","Final repair",`
-  <div class="mcard"><b>Your festival · Jouw festival</b>${L.map(esc).join(" · ")}</div>
+  <div class="mcard"><b>${S.enOnly?"Your festival":"Your festival · Jouw festival"}</b>${L.map(esc).join(" · ")}</div>
   <div class="flyer-grid"><div class="ff-col" style="display:flex;flex-direction:column;gap:10px">
-  ${F.map(([k,en,nl])=>`<div class="ff"><label for="fl-${k}">${en} <small>${nl}</small></label>${how[k]?`<span class="how">${esc(how[k])}</span>`:""}<input id="fl-${k}" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${esc(ph[k]||"")}" value="${esc(S.flyer[k]||"")}"><span class="msg" id="fm-${k}"></span></div>`).join("")}
+  ${F.map(([k,en,nl])=>`<div class="ff"><label for="fl-${k}">${en} <small class="nl">${nl}</small></label>${how[k]?`<span class="how">${esc(how[k])}</span>`:""}${k==="price"?`<div class="field">`:""}<input id="fl-${k}" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="${esc(ph[k]||"")}" value="${esc(S.flyer[k]||"")}">${k==="price"?`<button type="button" class="keybtn" data-fpound aria-label="Type the pound sign">£</button></div>`:""}<span class="msg" id="fm-${k}"></span></div>`).join("")}
   <div class="actions"><button class="big alt" type="button" id="whyhelp">Help me start · Help</button><button class="big alt" type="button" id="whyex">See an example</button></div>
   <div id="whybox"></div>
   <div id="fbx"></div>
@@ -739,6 +796,7 @@ function renderConsole(){
   F.forEach(([k])=>{const i=$("fl-"+k);i.oninput=()=>{S.flyer[k]=i.value;invalidateFlyer(k);drawPoster()};i.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();checkFlyer()}})});
   $("whyhelp").onclick=()=>$("whybox").innerHTML=`<div class="fb model"><span>Start with: <b>Come to …</b> or <b>This is the …</b></span></div>`;
   $("whyex").onclick=()=>$("whybox").innerHTML=`<div class="fb model"><span>Example: <b>Come to the coolest festival!</b> Now write your own sentence.</span></div>`;
+  const fp=document.querySelector("[data-fpound]");if(fp)fp.onclick=()=>{const i=$("fl-price");const a=i.selectionStart??i.value.length,b=i.selectionEnd??a;i.value=i.value.slice(0,a)+"£"+i.value.slice(b);S.flyer.price=i.value;invalidateFlyer("price");drawPoster();i.focus();i.setSelectionRange(a+1,a+1)};
   $("fcheck").onclick=checkFlyer;drawPoster();$("fl-name").focus({preventScroll:true});
 }
 function invalidateFlyer(k){
@@ -754,8 +812,8 @@ function flyerChecks(){
   const c=S.mission.card,f=S.flyer,out={};
   const has=(k)=>norm(f[k]||"");
   const bare=v=>v.replace(/^(the|at|in|on)\s+/,"");
-  out.name=!has("name")?"Write the festival name.":(has("name")===norm(c.name)||bare(has("name"))===norm(c.name))?true:"Copy the festival name from the card. · Neem de naam over van het kaartje.";
-  out.place=!has("place")?"Write the place.":(has("place")===norm(c.place)||bare(has("place"))===norm(c.place))?true:"Use the place from the card. · Gebruik de plaats van het kaartje.";
+  out.name=!has("name")?"Write the festival name.":(has("name")===norm(c.name)||bare(has("name"))===norm(c.name))?true:"Copy the festival name from the card. ¦ Neem de naam over van het kaartje.";
+  out.place=!has("place")?"Write the place.":(has("place")===norm(c.place)||bare(has("place"))===norm(c.place))?true:"Use the place from the card. ¦ Gebruik de plaats van het kaartje.";
   {const s=String(f.date||"").replace(/\s+/g," ").trim().replace(/\.$/,"");
    if(!s)out.date="Write the date.";
    else if(s===c.date.full||s===c.date.short)out.date=true;
@@ -766,24 +824,24 @@ function flyerChecks(){
    if(!s.trim())out.time="Write when it starts and when it ends.";
    else{const ms=[...s.matchAll(/(?<![\d:.,])(\d{1,2})(?::00)?\s*([ap])\.?\s*m\.?(?![a-z\d])/gi)];
     const loose=ms.some(m=>!/^\d{1,2}(?::00)?\s?[ap]\.m\.$/.test(m[0].replace(/\s+/g," ").trim().toLowerCase().replace(/(\d)([ap])/,"$1 $2")));
-    if(/(?<![\d:.,])\d{3,}\s*[ap]\.?\s*m|\d:\d{2}(?!\s*[ap])/i.test(s)&&ms.length!==2)out.time="Check the hours: use 1 to 12 with a.m. or p.m. · Gebruik 1 tot 12 met a.m. of p.m.";
-    else if(ms.length<2)out.time=/\d{1,2}:\d{2}/.test(s)?"Use a.m. or p.m., not the 24-hour clock. · Gebruik a.m. of p.m.":"Write the start time and the end time, with a.m. or p.m.";
+    if(/(?<![\d:.,])\d{3,}\s*[ap]\.?\s*m|\d:\d{2}(?!\s*[ap])/i.test(s)&&ms.length!==2)out.time="Check the hours: use 1 to 12 with a.m. or p.m. ¦ Gebruik 1 tot 12 met a.m. of p.m.";
+    else if(ms.length<2)out.time=/\d{1,2}:\d{2}/.test(s)?"Use a.m. or p.m., not the 24-hour clock. ¦ Gebruik a.m. of p.m.":"Write the start time and the end time, with a.m. or p.m.";
     else if(ms.length>2)out.time="Write two times only: when it starts and when it ends.";
-    else if(s.trim().split(/\s+/).length<5)out.time="Write a whole sentence: It starts at … and it ends at … · Schrijf een hele zin.";
+    else if(s.trim().split(/\s+/).length<5)out.time="Write a whole sentence: It starts at … and it ends at … ¦ Schrijf een hele zin.";
     else{const t=ms.slice(0,2).map(m=>({h:+m[1],a:m[2].toLowerCase()+".m."}));
       const okT=t[0].h===h12(c.start)&&t[0].a===ap(c.start)&&t[1].h===h12(c.end)&&t[1].a===ap(c.end);
-      if(!okT||t.some(x=>x.h<1||x.h>12))out.time="Check the times on the card: start first, then end. · Kijk naar de tijden op het kaartje.";
+      if(!okT||t.some(x=>x.h<1||x.h>12))out.time="Check the times on the card: start first, then end. ¦ Kijk naar de tijden op het kaartje.";
       else if(loose)out.time="Write a.m. and p.m. with dots: 4 p.m.";
       else out.time=true;}}}
   {const s=String(f.price||"");const m=s.match(/£\s*[\d.,]+|[\d.,]+\s*£/);
    if(!s.trim())out.price="Write the ticket price.";
    else if(!m)out.price="Write the price with £.";
-   else{const r=priceCheck(m[0].replace(/[.,]$/,""),c.price);out.price=!r.ok?r.msg:s.trim().split(/\s+/).length<3?"Write a whole sentence: Tickets are … · Schrijf een hele zin.":true}}
+   else{const r=priceCheck(m[0].replace(/[.,]$/,""),c.price);out.price=!r.ok?r.msg:s.trim().split(/\s+/).length<3?"Write a whole sentence: Tickets are … ¦ Schrijf een hele zin.":true}}
   {let s=has("artists");
    if(!s)out.artists="Write the artists.";
-   else if(!c.artists.every(a=>s.includes(norm(a))))out.artists="Write all the artists from the card. · Schrijf alle artiesten op.";
+   else if(!c.artists.every(a=>s.includes(norm(a))))out.artists="Write all the artists from the card. ¦ Schrijf alle artiesten op.";
    else{for(const a of [...c.artists].sort((x,y)=>y.length-x.length))s=s.replace(norm(a)," ");
-     out.artists=/^[\s,&]*(and[\s,&]*)*(will be performing|will perform|are performing|are playing|will play)?[\s.!]*$/.test(s)?true:"Just list the artists from the card. · Noem alleen de artiesten.";}}
+     out.artists=/^[\s,&]*(and[\s,&]*)*(will be performing|will perform|are performing|are playing|will play)?[\s.!]*$/.test(s)?true:"Just list the artists from the card. ¦ Noem alleen de artiesten.";}}
   out.why=norm(f.why||"").length>=3?true:"Write one reason why people should come.";
   return out;
 }
@@ -793,7 +851,7 @@ function checkFlyer(){
     if(res[k]===true){i.classList.add("okf");m.className="msg okm";m.textContent=k==="why"?"Reason added.":k==="time"?"✓ Times checked":k==="price"?"✓ Price checked":"✓ Checked";}
     else{all=false;i.classList.remove("okf");m.className="msg";m.textContent=res[k];}}
   if(!all){$("fbx").innerHTML=`<div class="fb hint" role="status"><span>Almost there. Look at the orange notes.</span></div>`;const bad=Object.keys(res).find(k=>res[k]!==true);$("fl-"+bad).focus();return}
-  $("fbx").innerHTML=`<div class="fb ok"><span><b>All details checked. Reason added.</b><span class="ex">Does your sentence tell people why to come? · Vertelt jouw zin waarom mensen moeten komen?</span></span></div>`;
+  $("fbx").innerHTML=`<div class="fb ok"><span><b>All details checked. Reason added.</b><span class="ex">Does your sentence tell people why to come? ¦ Vertelt jouw zin waarom mensen moeten komen?</span></span></div>`;
   $("acts").innerHTML=`<button class="big go" id="fsend" type="button">Yes, send it!</button><button class="big alt" id="fedit" type="button">Let me change it</button>`;
   $("fsend").onclick=()=>{const again=flyerChecks();if(Object.values(again).every(v=>v===true))win();else checkFlyer()};$("fedit").onclick=()=>{$("fl-why").focus();$("acts").innerHTML=`<button class="big" id="fcheck" type="button">Check my invitation</button>`;$("fcheck").onclick=checkFlyer};
   $("fsend").focus();
@@ -811,37 +869,56 @@ function showIntro(){
   overlay(`<div class="plea"><div class="plea-scene">${stars}<span class="pm">${ART.pleadMomo()}</span><span class="pp">${ART.pleadPip()}</span></div>
   <div class="speech">Help! Our spaceship is broken! Can you help us fix it?<small>Help! Ons ruimteschip is kapot! Wil jij ons helpen het te maken?</small></div>
   <p class="nl">Pip and Momo need your English to save the Moonpop festival.</p>
-  <button class="big help-yes" id="bYes" type="button">Yes, I'll help! · Ja, ik help!</button></div>`);
+  <button class="big help-yes" id="bYes" type="button">Yes, I'll help! ¦ Ja, ik help!</button></div>`);
   $("bYes").onclick=showStart;$("bYes").focus();
 }
 function showStart(){
-  S.phase="start";S.open=null;$("panelHost").innerHTML="";S.keys.clear();S.confirm=false;S.timedOut=false;
+  S.phase="start";S.enOnly=false;applyLang();S.open=null;$("panelHost").innerHTML="";S.keys.clear();S.confirm=false;S.timedOut=false;
   overlay(`<div class="cast" aria-hidden="true"><span class="walker">${ART.pip()}</span>${ART.momo()}${ART.plink()}<span style="align-self:center">${ART.dot()}</span></div>
   <h1>Last Call for Moonpop!</h1>
   <p>The little spaceship <b>Wobble</b> carries the stage for the Moonpop music festival. Fizzy moon jelly has broken six systems. Repair them with your English and send the festival invitation before the gate closes.</p>
   <p class="nl">Moonjelly heeft zes systemen van het ruimteschip kapotgemaakt. Repareer ze met je Engels en verstuur de uitnodiging voor het festival voordat de poort dichtgaat.</p>
   <div class="keys"><span>Walk:</span><kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd><span>or</span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>· or click a station ·</span><kbd>Enter</kbd><span>opens it</span></div>
-  <div class="actions"><button class="big" id="bStart" type="button">Start mission · Start missie</button><button class="big alt" id="bPractice" type="button">Practice · Oefenen</button><button class="big alt" id="bHelp" type="button">Help · Hulp</button></div>
-  <p class="rule">Mission: 10 minutes to catch the gate. Missed it? You go into safe orbit and can still finish. Practice has no clock.</p>`);
-  $("bStart").onclick=()=>begin("mission");$("bPractice").onclick=()=>begin("practice");$("bHelp").onclick=()=>openHelp(true);$("bStart").focus();
+  <h2>Choose your mission ¦ Kies je missie</h2>
+  <div class="modes">
+    <button class="mode" id="mG" type="button"><b>Guided</b><span>Met hulp: tips, kleinere stappen en geen klok.</span></button>
+    <button class="mode" id="mS" type="button"><b>Standard</b><span>The normal mission. ¦ De gewone missie.</span></button>
+    <button class="mode ch" id="mC" type="button"><b>Challenge</b><span>All English. More questions, fewer hints.</span></button>
+  </div>
+  <label class="clockopt" for="optClock"><input type="checkbox" id="optClock" ${S.useClock===false?"":"checked"}> Standard with the 10-minute clock ¦ Standard met de klok van 10 minuten</label>
+  <div class="actions"><button class="big alt" id="bHelp" type="button">Help ¦ Hulp</button></div>
+  <p class="rule">Standard with clock: 10 minutes to catch the gate. Missed it? You go into safe orbit and can still finish.</p>`);
+  const choose=lv=>{S.level=lv;S.useClock=$("optClock").checked;const mode=lv==="standard"&&S.useClock?"mission":"practice";S.enOnly=lv==="challenge";applyLang();if(S.tutDone)begin(mode);else showTutorial(mode)};
+  $("mG").onclick=()=>choose("guided");$("mS").onclick=()=>choose("standard");$("mC").onclick=()=>choose("challenge");$("bHelp").onclick=()=>openHelp(true);$("mS").focus();
 }
 let nextSeed=null;
 function begin(mode,seed){
   const s=seed??Math.floor(Math.random()*2**31);
-  const m=(seed!=null&&S.mission&&S.mission.seed===seed)?S.mission:makeMission(s);
+  const m=(seed!=null&&S.mission&&S.mission.seed===seed&&S.mission.level===S.level)?S.mission:makeMission(s,S.level);
+  S.enOnly=S.level==="challenge";applyLang();
   $("panelHost").innerHTML="";S.keys.clear();S.help=false;S.confirm=false;S._helpFromStart=false;
   announce("");newRun(m,mode);renderStations();updateStations();closeOverlay();S.phase="play";last=performance.now();
   say("plink","Hello! I am Captain Plink. Please fix my ship!",4500);room.focus({preventScroll:true});
 }
 function openHelp(fromStart){
   S.help=true;
-  const html=`<h2>Help · Hulp</h2>
+  const sm=showMeAfter(),NLN=["","één","twee","drie"],ENN=["","one","two","three"];
+  const tNL=fromStart?"<b>Guided</b>: geen klok. <b>Standard</b>: kies zelf met of zonder klok van 10 minuten. Tijd op? Dan gaat het schip in een veilige baan en kun je gewoon afmaken. <b>Challenge</b>: een stopwatch; je tijd verbeteren mag, maar hoeft niet."
+    :S.level==="guided"?"Er is geen klok. Neem rustig de tijd.":S.mode==="mission"?"Je hebt 10 minuten. Tijd op? Dan gaat het schip in een veilige baan en kun je gewoon afmaken. Help en een verborgen tabblad tellen niet mee.":"Er is geen klok in deze missie.";
+  const sNL=fromStart?"Na één keer fout (Guided), twee keer (Standard) of drie keer (Challenge)":`Na ${NLN[sm]} keer fout`;
+  const html=S.enOnly?`<h2>Help</h2>
+  <p><b>Walk:</b> arrow keys or W A S D. You can also click a station: Pip walks there and opens it. <kbd>Enter</kbd> opens the station Pip is standing next to.</p>
+  <p><b>Repair:</b> every station has a few tasks. Each task says what your answer should look like. Type your answer and click <b>Check</b>. Wrong? You get a hint and the rule. After ${ENN[sm]} wrong tries you can click <b>Show me</b>: you see the answer and then do a similar task yourself.</p>
+  <p><b>Time:</b> Challenge has a stopwatch. Beating your time is optional.</p>
+  <p><b>Finish:</b> when all six systems work, go to the Broadcast console in the middle and write the festival invitation.</p>
+  <p class="rule">Nothing is saved or sent. When you close or reload the page, everything is gone.</p>
+  <div class="actions"><button class="big" id="hClose" type="button">Close</button></div>`:`<h2>Help ¦ Hulp</h2>
   <p><b>Lopen:</b> pijltjestoetsen of W A S D. Je kunt ook op een station klikken: Pip loopt erheen en opent het. <kbd>Enter</kbd> opent het station waar Pip bij staat.</p>
-  <p><b>Repareren:</b> elk station heeft een paar opdrachten. Typ of kies je antwoord en klik op <b>Check</b>. Fout? Je krijgt een tip. Na twee keer fout kun je <b>Show me · Laat zien</b> kiezen: je ziet het antwoord en doet daarna zelf een vergelijkbare opdracht.</p>
-  <p><b>Tijd:</b> in een missie heb je 10 minuten. Tijd op? Dan gaat het schip in een veilige baan en kun je gewoon afmaken. Help en een verborgen tabblad tellen niet mee.</p>
+  <p><b>Repareren:</b> elk station heeft een paar opdrachten. Bij elke opdracht staat hoe je antwoord eruit moet zien. Typ of kies je antwoord en klik op <b>Check</b>. Fout? Je krijgt een tip.${!fromStart&&S.level==="guided"?" In Guided zie je meteen al een tip.":""} ${sNL} kun je <b>Show me ¦ Laat zien</b> kiezen: je ziet het antwoord en doet daarna zelf een vergelijkbare opdracht.</p>
+  <p><b>Tijd:</b> ${tNL}</p>
   <p><b>Einde:</b> als alle zes systemen werken, schrijf je bij de Broadcast-console in het midden de uitnodiging voor het festival.</p>
-  <p class="rule">Nothing is saved or sent. When you close or reload the page, everything is gone. · Er wordt niets opgeslagen of verstuurd.</p>
-  <div class="actions"><button class="big" id="hClose" type="button">Close · Sluiten</button></div>`;
+  <p class="rule">Nothing is saved or sent. When you close or reload the page, everything is gone. ¦ Er wordt niets opgeslagen of verstuurd.</p>
+  <div class="actions"><button class="big" id="hClose" type="button">Close ¦ Sluiten</button></div>`;
   overlay(html);$("hClose").onclick=closeHelp;$("hClose").focus();S._helpFromStart=fromStart;
 }
 function closeHelp(){S.help=false;closeOverlay();if(S._helpFromStart)showStart();else if(S.timedOut&&!S.overtime)showTimeout();last=performance.now()}
@@ -849,19 +926,19 @@ $("helpBtn").onclick=()=>{if(S.help)return;openHelp(S.phase==="start")};
 $("homeBtn").onclick=()=>{
   if(S.phase==="start")return;
   if(S.phase==="win"||!anyProgress()){showStart();return}
-  S.confirm=true;overlay(`<h2>Leave this mission?</h2><p>Your answers will be cleared. · Je antwoorden worden gewist.</p><div class="actions"><button class="big" id="cStay" type="button">Stay · Blijven</button><button class="big alt" id="cLeave" type="button">Leave · Stoppen</button></div>`);
+  S.confirm=true;overlay(`<h2>Leave this mission?</h2><p>Your answers will be cleared. ¦ Je antwoorden worden gewist.</p><div class="actions"><button class="big" id="cStay" type="button">Stay ¦ Blijven</button><button class="big alt" id="cLeave" type="button">Leave ¦ Stoppen</button></div>`);
   $("cStay").onclick=()=>{S.confirm=false;closeOverlay();if(S.timedOut&&!S.overtime)showTimeout();last=performance.now()};$("cLeave").onclick=()=>{S.confirm=false;showStart()};$("cStay").focus();
 };
 function showTimeout(){
-  overlay(`<h2>We missed this gate.</h2><p><b>Safe orbit!</b> Finish the repairs and catch the next one.</p><p class="nl">De poort is dicht, maar het schip is veilig. Maak de reparaties gewoon af.</p><div class="actions"><button class="big" id="tGo" type="button">Keep going · Verder</button><button class="big alt" id="tRe" type="button">Restart · Opnieuw</button></div>`);
+  overlay(`<h2>We missed this gate.</h2><p><b>Safe orbit!</b> Finish the repairs and catch the next one.</p><p class="nl">De poort is dicht, maar het schip is veilig. Maak de reparaties gewoon af.</p><div class="actions"><button class="big" id="tGo" type="button">Keep going ¦ Verder</button><button class="big alt" id="tRe" type="button">Restart ¦ Opnieuw</button></div>`);
   $("tGo").onclick=()=>{S.overtime=true;S.timedOut=false;closeOverlay();last=performance.now();const i=document.querySelector("#pbody input");if(i)i.focus()};
   $("tRe").onclick=()=>{const seed=S.mission.seed;begin("mission",seed)};$("tGo").focus();
 }
 function win(){
   S.phase="win";const t=S.active;const c=S.mission.card;
-  const label=S.mode==="practice"?"Practice complete":S.overtime?"Safe-orbit rescue":"First gate caught";
+  const label=S.level==="guided"?"Guided mission complete":S.level==="challenge"?"Challenge complete":S.mode==="practice"?"Practice complete":S.overtime?"Safe-orbit rescue":"First gate caught";
   let bestTxt="";
-  if(label==="First gate caught"){const k=S.mission.seed;const prev=S.best[k];if(prev==null||t<prev)S.best[k]=t;bestTxt=`<span>Best on this mission: ${mmss(S.best[k])}</span>`}
+  if(label==="First gate caught"||S.level==="challenge"){const k=S.level+"-"+S.mission.seed;const prev=S.best[k];if(prev==null||t<prev)S.best[k]=t;bestTxt=`<span>Best on this mission: ${mmss(S.best[k])}</span>`}
   const f=S.flyer;
   $("panelHost").innerHTML="";S.open=null;
   overlay(`<div class="gate" id="gate"><div class="crew" aria-hidden="true">${ART.momo()}${ART.pip()}${ART.plink()}${ART.dot()}</div><div class="door dl"></div><div class="door dr"></div></div>
@@ -869,16 +946,53 @@ function win(){
   <div class="stats"><span>${label}</span><span>Time: ${mmss(t)}</span>${bestTxt}</div>
   <p><b>Six systems repaired. Invitation ready.</b></p>
   <div class="poster" style="min-height:0"><div class="pn">${esc(f.name)}</div><div class="pl">${esc(f.place)}</div><div class="pl">${esc(f.date)}</div><div class="pl">${esc(f.time)}</div><div class="pl">${esc(f.price)}</div><div class="pl">${esc(f.artists)}</div><div class="pw">${esc(f.why)}</div></div>
+  ${(()=>{const p=practised();return p.length?`<div><b>You practised ¦ Je oefende:</b></div><div class="chips">${p.map(x=>`<span>${esc(x)}</span>`).join("")}</div>`:""})()}
+  ${(()=>{const n=helpedCount();return n?`<p>You used a hint to fix ${n} ${n===1?"answer":"answers"}. ¦ Met de tip heb je ${n} ${n===1?"antwoord":"antwoorden"} verbeterd.</p>`:""})()}
   ${S.hinted.length?`<div class="fb model"><span>${S.hinted.slice(0,3).map(esc).join("<br>")}</span></div>`:""}
-  <p class="rule">Try it on paper: write another flyer without the card. · Probeer het op papier: schrijf nog een flyer zonder het kaartje.</p>
-  <div class="actions"><button class="big" id="wSame" type="button">Same mission</button><button class="big alt" id="wNew" type="button">New mission</button></div>`);
+  <p class="rule">Try it on paper: write another flyer without the card. ¦ Probeer het op papier: schrijf nog een flyer zonder het kaartje.</p>
+  <div class="actions"><button class="big" id="wSame" type="button">Same mission</button><button class="big alt" id="wNew" type="button">New mission</button><button class="big alt" id="wMode" type="button">Choose another mode ¦ Andere missie kiezen</button></div>`);
   requestAnimationFrame(()=>requestAnimationFrame(()=>$("gate").classList.add("open")));
-  const wb=[$("wSame"),$("wNew")];wb.forEach(x=>x.disabled=true);
+  const wb=[$("wSame"),$("wNew"),$("wMode")];wb.forEach(x=>x.disabled=true);
   setTimeout(()=>{wb.forEach(x=>x.disabled=false);$("wSame").focus()},1200);
-  $("wSame").onclick=()=>begin(S.mode,S.mission.seed);$("wNew").onclick=()=>begin(S.mode);
+  $("wSame").onclick=()=>begin(S.mode,S.mission.seed);$("wNew").onclick=()=>begin(S.mode);$("wMode").onclick=()=>showStart();
   announce("Festival saved!");
 }
 document.addEventListener("visibilitychange",()=>{last=performance.now()});
+
+/* ============ v2: practised list, tutorial, English-only ============ */
+function practised(){
+  const ORDER=["vocab","present","be","sup","plural","date","time","price"];const by={};
+  for(const s of STATIONS)for(const it of S.st[s.id].items){if(!it.fixed)continue;const sp=it.done||it.spec;let ex;
+    if(sp.skill==="vocab")ex=sp.entry.en;else if(sp.skill==="present"||sp.skill==="be")ex=`${lowerSubj(sp.actor)} ${sp.gap}`;else if(sp.skill==="sup"||sp.skill==="plural")ex=sp.gap;else ex=sp.model;
+    (by[sp.skill]=by[sp.skill]||[]);if(ex&&!by[sp.skill].includes(ex))by[sp.skill].push(ex)}
+  const out=[];for(let round=0;round<3&&out.length<10;round++)for(const k of ORDER){const v=(by[k]||[])[round];if(v&&out.length<10)out.push(v)}
+  return out}
+function helpedCount(){let n=0;for(const s of STATIONS)for(const it of S.st[s.id].items)if(it.fixed&&it.helped)n++;return n}
+function showTutorial(mode){
+  overlay(`<h2>How to repair ¦ Zo repareer je</h2>
+  <p>Every station works like this. Try it once. ¦ Elk station werkt zo. Probeer het één keer.</p>
+  ${S.enOnly?`<div class="tut"><div class="instr">Complete the sentence</div><div class="prompt">Your first singing <b>___</b> is on Friday. <span class="rule">(l _ _ _ _ _)</span></div>
+  <div class="need">Type the missing word.</div>`:`<div class="tut"><div class="instr">Type in English<small>Typ in het Engels</small></div><div class="prompt"><b>les</b></div>
+  <div class="need">Type the English word. ¦ Typ het Engelse woord.</div>`}
+  <div class="field"><label class="sr" for="tutIn">Your answer</label><input id="tutIn" autocomplete="off" autocapitalize="off" spellcheck="false"></div>
+  <div id="tutFb"></div>
+  <div class="actions"><button class="big" id="tutCheck" type="button">Check</button><button class="big alt" id="tutHint" type="button">Tip</button></div></div>
+  <div class="actions" id="tutGo"><button class="big alt" id="tutSkip" type="button">Skip ¦ Overslaan</button></div>`);
+  const fb=h=>$("tutFb").innerHTML=h;
+  const check=()=>{const v=norm($("tutIn").value);
+    if(v==="lesson"){S.tutDone=true;fb(`<div class="fb ok"><span><b>Fixed!</b><span class="ex" style="font-style:normal">That's how every station works. ¦ Zo werkt elk station.</span></span></div>`);
+      $("tutGo").innerHTML=`<button class="big go" id="tutStart" type="button">Start the mission ¦ Start de missie</button>`;$("tutStart").onclick=()=>begin(mode);$("tutStart").focus();$("tutIn").disabled=true;}
+    else fb(`<div class="fb hint"><span>${v?"Not quite. Click Tip for help. ¦ Nog niet goed. Klik op Tip voor hulp.":"Type a word first. ¦ Typ eerst een woord."}</span></div>`)};
+  $("tutCheck").onclick=check;$("tutIn").addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();check()}});
+  $("tutHint").onclick=()=>{fb(`<div class="fb model"><span><b>Tip:</b> It starts with “l”. You have one at school every day. ¦ Het begint met “l”.</span></div>`);$("tutIn").focus()};
+  $("tutSkip").onclick=()=>{S.tutDone=true;begin(mode)};
+  $("tutIn").focus();
+}
+// Bilingual texts are written as "English ¦ Nederlands". Challenge shows only the English part; other modes show both.
+function biNode(t){const v=t.nodeValue;if(!v||v.indexOf(" ¦ ")<0)return;t.nodeValue=S.enOnly?v.split(" ¦ ")[0]:v.split(" ¦ ").join(" · ")}
+function biAll(root){const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);let n;while((n=w.nextNode()))biNode(n)}
+new MutationObserver(ms=>{for(const m of ms){if(m.type==="characterData")biNode(m.target);else m.addedNodes.forEach(a=>{if(a.nodeType===3)biNode(a);else if(a.nodeType===1)biAll(a)})}}).observe(document.body,{childList:true,subtree:true,characterData:true});
+function applyLang(){document.body.classList.toggle("en-only",!!S.enOnly);$("helpBtn").textContent=S.enOnly?"Help":"Help · Hulp"}
 
 /* ============ BOOT ============ */
 renderStations();
